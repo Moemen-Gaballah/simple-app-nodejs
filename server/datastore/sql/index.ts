@@ -1,19 +1,23 @@
 import path from 'path';
-import { open as sqliteOpen } from 'sqlite';
+import { Database, open as sqliteOpen } from 'sqlite';
 import sqlite3 from 'sqlite3';
 
 import {Datastore} from "../index";
 import { Comment, Like, Post, User} from "../../types";
 
 export class SqlDataStore implements Datastore {
+    private db!: Database<sqlite3.Database, sqlite3.Statement>;
     public async openDb() {
         // open the database
-        const db = await sqliteOpen({
+         this.db = await sqliteOpen({
            filename: path.join(__dirname, 'codersquare.sqlite'),
            driver: sqlite3.Database,
         });
 
-        await db.migrate({
+         // for use foreign key
+        this.db.run('PRAGMA foreign_keys = ON;');
+
+        await this.db.migrate({
             migrationsPath: path.join(__dirname, 'migrations'),
         });
 
@@ -28,8 +32,15 @@ export class SqlDataStore implements Datastore {
         return Promise.resolve(undefined);
     }
 
-    createPost(post: Post): Promise<void> {
-        return Promise.resolve(undefined);
+    async createPost(post: Post): Promise<void> {
+        await this.db.run('INSERT INTO posts (id, title, url, postedAt, userId) VALUES (?, ?, ?, ?, ?)',
+            post.id,
+            post.title,
+            post.url,
+            post.postedAt,
+            post.userId
+        );
+        // return Promise.resolve(undefined);
     }
 
     createUser(user: User): Promise<void> {
@@ -61,7 +72,7 @@ export class SqlDataStore implements Datastore {
     }
 
     listPosts(): Promise<Post[]> {
-        return Promise.resolve([]);
+        return this.db.all<Post[]>('SELECT * FROM posts');
     }
 
 }
