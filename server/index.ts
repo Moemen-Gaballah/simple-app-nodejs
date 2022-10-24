@@ -2,6 +2,7 @@ import express, {ErrorRequestHandler, RequestHandler} from 'express';
 import {createPostHandler, listPostsHandler} from "./handlers/postHandler";
 import asyncHandler from "express-async-handler";
 import {initDb} from "./datastore";
+import {signUpHandler, signInHandler} from "./handlers/userHandler";
 
 (async () => {
     await initDb();
@@ -18,9 +19,11 @@ import {initDb} from "./datastore";
 
     app.use(requestloggerMiddleware);
 
-    app.get('/posts', asyncHandler(listPostsHandler));
+    app.get('/v1/posts', asyncHandler(listPostsHandler));
+    app.post('/v1/posts', asyncHandler(createPostHandler));
 
-    app.post('/posts', asyncHandler(createPostHandler));
+    app.post('/v1/signup', asyncHandler(signUpHandler));
+    app.post('/v1/signin', asyncHandler(signInHandler));
 
     const errHandler: ErrorRequestHandler = (err, req, res, next) => {
         console.log('Uncaught exception:', err);
