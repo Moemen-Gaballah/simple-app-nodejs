@@ -29,7 +29,7 @@ export const createPostHandler: ExpressHandler<
         postedAt: Date.now(),
         title: req.body.title,
         url: req.body.url,
-        userId: '123',
+        userId: res.locals.userId,
         // userId: req.body.userId,
     };
 
