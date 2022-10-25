@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon server.ts",
+    "start:prod": "pm2 delete codersquare; pm2 start --name codersquare \"npx ts-node --trasnpile-only server.ts\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -14,6 +15,7 @@
     "express": "^4.18.2",
     "express-async-handler": "^1.2.0",
     "jsonwebtoken": "^8.5.1",
+    "pm2": "^5.2.2",
     "sqlite": "^4.1.2",
     "sqlite3": "^5.1.2",
     "typescript": "^4.8.4"
