@@ -68,6 +68,10 @@ export class SqlDataStore implements Datastore {
         return Promise.resolve(undefined);
     }
 
+    getUserById(id: string): Promise<User | undefined> {
+        return this.db.get<User>(`SELECT * FROM users where id = ?`, id);
+    }
+
     getUserByEmail(email: string): Promise<User | undefined> {
         return this.db.get<User>(`SELECT *
                                   FROM users
@@ -87,5 +91,6 @@ export class SqlDataStore implements Datastore {
     listPosts(): Promise<Post[]> {
         return this.db.all<Post[]>('SELECT * FROM posts');
     }
+
 
 }

@@ -7,6 +7,7 @@ import {CreatePostRequest, CreatePostResponse, ListPostsRequest, ListPostsRespon
 
 export const listPostsHandler: ExpressHandler<ListPostsRequest, ListPostsResponse> = async (request, response) => {
     // throw new Error('oops!');
+    console.log(request.headers.authorization);
     return response.send({posts: await db.listPosts()});
 }
 
@@ -19,7 +20,7 @@ export const listPostsHandler: ExpressHandler<ListPostsRequest, ListPostsRespons
 export const createPostHandler: ExpressHandler<
     CreatePostRequest,
     CreatePostResponse> = async (req, res) => {
-    if(!req.body.title || !req.body.userId || !req.body.url){
+    if(!req.body.title || !req.body.url){
         return res.sendStatus(400);
     };
 
@@ -28,7 +29,8 @@ export const createPostHandler: ExpressHandler<
         postedAt: Date.now(),
         title: req.body.title,
         url: req.body.url,
-        userId: req.body.userId,
+        userId: '123',
+        // userId: req.body.userId,
     };
 
     await db.createPost(post);

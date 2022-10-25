@@ -2,6 +2,8 @@ import { User, Post, Like, Comment } from "../../types";
 import { Datastore} from "../index";
 
 export class InMemoryDatastore implements Datastore {
+
+
     private users: User[] = [];
     private posts: Post[] = [];
     private comments: Comment[] = [];
@@ -12,6 +14,11 @@ export class InMemoryDatastore implements Datastore {
         return Promise.resolve();
         // throw new Error("Method not implemented.");
     }
+
+    getUserById(id: string): Promise<User | undefined> {
+        return Promise.resolve(this.users.find(u => u.id === id));
+    }
+
     getUserByEmail(email: string): Promise<User | undefined> {
         return Promise.resolve(this.users.find(u => u.email === email));
     }
