@@ -1,4 +1,4 @@
-import {Comment, Like, Post, User} from "../shared/src/types";
+import {Comment, Like, Post, User} from "./types";
 
 // Post APIs
 export interface ListPostsRequest {}

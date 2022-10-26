@@ -1,4 +1,4 @@
-import { User, Post, Like, Comment } from "../../types";
+import { User, Post, Like, Comment } from "../../../shared/src/types";
 import { Datastore} from "../index";
 
 export class InMemoryDatastore implements Datastore {

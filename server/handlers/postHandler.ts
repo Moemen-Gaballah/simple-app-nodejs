@@ -1,14 +1,14 @@
 import {db} from "../datastore";
-import {ExpressHandler, Post} from "../types";
+import {ExpressHandler, Post} from "../../shared/src/types";
 import crypto from 'crypto';
-import {CreatePostRequest, CreatePostResponse, ListPostsRequest, ListPostsResponse} from "../api";
+import {CreatePostRequest, CreatePostResponse, ListPostsRequest, ListPostsResponse} from "../../shared/src/api";
 
 
 
-export const listPostsHandler: ExpressHandler<ListPostsRequest, ListPostsResponse> = async (request, response) => {
+export const listPostsHandler: ExpressHandler<ListPostsRequest, ListPostsResponse> = async (req, res) => {
     // throw new Error('oops!');
-    console.log(request.headers.authorization);
-    return response.send({posts: await db.listPosts()});
+    console.log(req.headers.authorization);
+    return res.send({posts: await db.listPosts()});
 }
 
 

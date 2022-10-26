@@ -3,7 +3,7 @@ import {Database, open as sqliteOpen} from 'sqlite';
 import sqlite3 from 'sqlite3';
 
 import {Datastore} from "../index";
-import {Comment, Like, Post, User} from "../../types";
+import {Comment, Like, Post, User} from "../../../shared/src/types";
 import {raw} from "express";
 
 export class SqlDataStore implements Datastore {

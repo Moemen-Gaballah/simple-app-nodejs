@@ -7,7 +7,7 @@ import {requestLoggerMiddleware} from "./middleware/loggermiddleware";
 import { errHandler } from "./middleware/errorMiddleware";
 import dotenv from 'dotenv';
 import {authMiddleware} from "./middleware/authMiddleware";
-
+import cors from "cors";
 (async () => {
     await initDb();
     dotenv.config();
@@ -15,19 +15,20 @@ import {authMiddleware} from "./middleware/authMiddleware";
     const app = express();
 
     app.use(express.json());
+    app.use(cors());
 
     app.use(requestLoggerMiddleware);
 
     // public endpoints
-    app.get('/healthz', (req, res) => res.send({status: 'OK'}));
-    app.post('/v1/signup', asyncHandler(signUpHandler));
-    app.post('/v1/signin', asyncHandler(signInHandler));
+    app.get('/healthz', (_, res) => res.send({status: 'OK'}));
+    app.post('/api/v1/signup', asyncHandler(signUpHandler));
+    app.post('/api/v1/signin', asyncHandler(signInHandler));
 
-    app.use(authMiddleware);
+    // app.use(authMiddleware);
 
     // protected endpoints
-    app.get('/v1/posts', asyncHandler(listPostsHandler));
-    app.post('/v1/posts', asyncHandler(createPostHandler));
+    app.get('/api/v1/posts', asyncHandler(listPostsHandler));
+    app.post('/api/v1/posts', asyncHandler(createPostHandler));
 
 
 
@@ -36,6 +37,11 @@ import {authMiddleware} from "./middleware/authMiddleware";
     app.use(errHandler);
 
     app.listen(process.env.PORT || 3000);
+    // const port = process.env.PORT;
+    // const env = process.env.ENV;
+
+    // app.listen(port, () => console.log(`Listening on port ${port} on ${env} environment`));
+
 
 })();
 

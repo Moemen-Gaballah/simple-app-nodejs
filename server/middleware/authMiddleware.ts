@@ -1,4 +1,4 @@
-import { ExpressHandler } from "../types";
+import { ExpressHandler } from "../../shared/src/types";
 import { db } from '../datastore';
 import {verifyJwt} from "../auth";
 

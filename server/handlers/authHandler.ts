@@ -1,6 +1,6 @@
-import {ExpressHandler, User} from "../types";
+import {ExpressHandler, User} from "../../shared/src/types";
 import { db } from '../datastore'
-import {SignInRequest, SignInResponse, SignUpRequest, SignUpResponse} from "../api";
+import {SignInRequest, SignInResponse, SignUpRequest, SignUpResponse} from "../../shared/src/api";
 import crypto from 'crypto';
 import {signJwt} from "../auth";
 
